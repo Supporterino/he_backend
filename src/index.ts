@@ -6,7 +6,7 @@ import monk from 'monk';
 
 dotenv.config();
 
-const log: Logger = new Logger({
+export const log: Logger = new Logger({
     name: 'he_backend_logger',
     minLevel: 'silly',
     dateTimeTimezone: 'Europe/Berlin'

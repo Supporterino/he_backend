@@ -1,11 +1,10 @@
-/// <reference path="./index.ts" />
-
 import Router from 'express';
+import { log }from './index';
 
 const router = Router();
 
 router.post('/new_disease', (req, res) => {
-    console.log(req.body);
+    log.debug(`Received following POST data: ${JSON.stringify(req.body)}`);
     res.json('Received');
 });
 
