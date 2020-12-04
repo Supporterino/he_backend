@@ -5,7 +5,7 @@ import Router from 'express';
 const router = Router();
 
 router.post('/new_disease', (req, res) => {
-    log.silly(req.body);
+    console.log(req.body);
     res.json('Received');
 });
 
