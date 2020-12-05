@@ -2,7 +2,7 @@ import Router from 'express';
 import { log, diseases, signs } from './index';
 import { genSignsTable, getPossibles } from './utils';
 
-const router = Router();
+export const router = Router();
 
 router.post('/new_disease', async (req, res) => {
     log.debug(`Received following POST data: ${JSON.stringify(req.body)}`);
@@ -32,7 +32,7 @@ router.post('/new_disease', async (req, res) => {
                 signs: signs
             }
 
-            const created = await diseases.insert(new_dis);
+            await diseases.insert(new_dis);
             log.debug(`Inserted new diseases: ${JSON.stringify(new_dis)}`);
             res.json({
                 msg: `Created disease.`
@@ -82,7 +82,7 @@ router.get('/signs', (req, res) => {
     log.debug(`Returning all singns present in db.`);
     signs.find()
         .then(all => {
-            let clean: string[] = [];
+            const clean: string[] = [];
             all.forEach(e => clean.push(e.name));
             res.json(clean);
         })
@@ -102,5 +102,3 @@ router.get('/possible_disease', async (req, res) => {
         res.json(possibles);
     }
 });
-
-module.exports = router;

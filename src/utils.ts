@@ -1,9 +1,14 @@
 import { diseases, log, signs } from './index';
 
-export const genSignsTable = () => {
+type disease = {
+    name: string,
+    signs: string[]
+}
+
+export const genSignsTable = () : void => {
     diseases.find({})
         .then((all) => {
-            let sings_collected = new Set<string>();
+            const sings_collected = new Set<string>();
             all.forEach(one => {
                 one.signs.forEach((element: string) => {
                     sings_collected.add(element);
@@ -23,8 +28,8 @@ const setSigns = (possibleSigns: Set<string>) => {
     })
 }
 
-export const getPossibles = async (wanted: string[]) => {
-    const possy: any[] = [];
+export const getPossibles = async (wanted: string[]) : Promise<disease[]> => {
+    const possy: disease[] = [];
     const all_des = await diseases.find();
     all_des.forEach(e => {
         if (checker(e.signs, wanted)) possy.push(e);
@@ -32,4 +37,4 @@ export const getPossibles = async (wanted: string[]) => {
     return possy;
 }
 
-const checker = (arr: any[], target: any[]) => target.every(v => arr.includes(v));
+const checker = (arr: string[], target: string[]) => target.every(v => arr.includes(v));

@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { appendFileSync } from 'fs';
 import monk from 'monk';
 import helmet from 'helmet';
+import { router } from './api';
 
 dotenv.config();
 
@@ -17,8 +18,6 @@ const port = process.env.PORT;
 const db_url = process.env.DBURL;
 const db_port = process.env.DBPORT;
 const db_string = `${db_url}:${db_port}/he`;
-
-const api = require('./api');
 
 const db = monk(db_string);
 
@@ -46,7 +45,7 @@ app.use(express.json());
 app.use(express.static('./client'));
 app.enable('trust proxy');
 
-app.use('/api', api);
+app.use('/api', router);
 
 app.listen(port, () => {
     log.info(`Running backend on ${port}`)
