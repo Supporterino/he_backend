@@ -37,15 +37,13 @@ router.post('/new_disease', async (req, res) => {
             res.json({
                 msg: `Created disease.`
             });
-            genSignsTable();
+            genSignsTable(signs);
         }
     }
 });
 
-router.get('/get_disease/:id', (req, res) => {
-    const { id:name } = req.params;
-
-    diseases.findOne({ name: name })
+router.get('/get_disease', (req, res) => {
+    diseases.find({})
         .then((doc) => {
             if (doc) res.json(doc);
             else res.json({ msg: `No disease present with this name.`});
@@ -68,7 +66,7 @@ router.post('/update', (req, res) => {
             res.json({
                 msg: `${name} updated.`
             });
-            genSignsTable();
+            genSignsTable(signs);
         })
         .catch((err) => {
             log.warn(`Error getting a disease from database (${err})`);
@@ -88,7 +86,7 @@ router.get('/signs', (req, res) => {
         })
 });
 
-router.get('/possible_disease', async (req, res) => {
+router.post('/possible_disease', async (req, res) => {
     const { signs } = req.body;
     if (!signs || signs.length === 0) {
         log.warn(`Getting possible disease without signs.`)

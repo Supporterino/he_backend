@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { appendFileSync } from 'fs';
 import monk from 'monk';
 import helmet from 'helmet';
+import cors from 'cors';
 import { router } from './api';
 
 dotenv.config();
@@ -13,6 +14,8 @@ export const log: Logger = new Logger({
     minLevel: 'silly',
     dateTimeTimezone: 'Europe/Berlin'
 });
+
+attachFileOut();
 
 const port = process.env.PORT;
 const db_url = process.env.DBURL;
@@ -44,6 +47,7 @@ app.use(helmet.xssFilter());
 app.use(express.json());
 app.use(express.static('./client'));
 app.enable('trust proxy');
+app.use(cors());
 
 app.use('/api', router);
 

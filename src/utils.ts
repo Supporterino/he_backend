@@ -5,24 +5,11 @@ type disease = {
     signs: string[]
 }
 
-export const genSignsTable = () : void => {
-    diseases.find({})
-        .then((all) => {
-            const sings_collected = new Set<string>();
-            all.forEach(one => {
-                one.signs.forEach((element: string) => {
-                    sings_collected.add(element);
-                });
-            })
-            setSigns(sings_collected);
-        })
-}
-
-const setSigns = (possibleSigns: Set<string>) => {
-    possibleSigns.forEach(async value => {
-        const existing = await signs.findOne({ name: value })
+export const genSignsTable = (possibleSigns: string[]) : void => {
+    possibleSigns.forEach(async e => {
+        const existing = await signs.findOne({ name: e });
         if (!existing) {
-            const created = await signs.insert({ name: value });
+            const created = await signs.insert({ name: e });
             log.debug(`${JSON.stringify(created)}`);
         }
     })
