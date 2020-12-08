@@ -6,7 +6,7 @@ export const router = Router();
 
 router.post('/new_disease', async (req, res) => {
     log.debug(`Received following POST data: ${JSON.stringify(req.body)}`);
-    const { name, signs } = req.body;
+    const { name, signs, causes, complications, therapy } = req.body;
 
     if (name === '') {
         log.warn(`Received new disease without name. Data: ${JSON.stringify(req.body)}`);
@@ -29,7 +29,10 @@ router.post('/new_disease', async (req, res) => {
         } else {
             const new_dis = {
                 name: name,
-                signs: signs
+                signs: signs,
+                causes: causes,
+                complications: complications,
+                therapy: therapy
             }
 
             await diseases.insert(new_dis);
@@ -58,9 +61,9 @@ router.get('/get_disease', (req, res) => {
 
 router.post('/update', (req, res) => {
     log.debug(`Received following POST data: ${JSON.stringify(req.body)}`);
-    const { name, signs } = req.body;
+    const { name, signs, causes, complications, therapy } = req.body;
 
-    diseases.findOneAndUpdate({ name: name }, { $set: { signs: signs } })
+    diseases.findOneAndUpdate({ name: name }, { $set: { signs: signs, causes: causes, complications: complications, therapy: therapy } })
         .then((doc) => {
             log.debug(`Updated ${name} to: ${JSON.stringify(doc)}`);
             res.json({

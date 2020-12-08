@@ -2,7 +2,10 @@ import { diseases, log, signs } from './index';
 
 type disease = {
     name: string,
-    signs: string[]
+    signs: string[],
+    causes: string,
+    complications: string,
+    therapy: string
 }
 
 export const genSignsTable = (possibleSigns: string[]) : void => {
