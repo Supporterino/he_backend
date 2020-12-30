@@ -8,22 +8,22 @@ type disease = {
     therapy: string
 }
 
-export const genSignsTable = (possibleSigns: string[]) : void => {
+export const genSignsTable = (possibleSigns: string[]): void => {
     possibleSigns.forEach(async e => {
         const existing = await signs.findOne({ name: e });
         if (!existing) {
             const created = await signs.insert({ name: e });
             log.debug(`${JSON.stringify(created)}`);
         }
-    })
+    });
 }
 
-export const getPossibles = async (wanted: string[]) : Promise<disease[]> => {
+export const getPossibles = async (wanted: string[]): Promise<disease[]> => {
     const possy: disease[] = [];
     const all_des = await diseases.find();
     all_des.forEach(e => {
         if (checker(e.signs, wanted)) possy.push(e);
-    })
+    });
     return possy;
 }
 
