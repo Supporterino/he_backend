@@ -1,7 +1,6 @@
-import { Logger, ILogObject } from 'tslog';
+import { Logger } from 'tslog';
 import express from 'express';
 import * as dotenv from 'dotenv';
-import { appendFileSync } from 'fs';
 import monk from 'monk';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -15,8 +14,6 @@ export const log: Logger = new Logger({
     dateTimeTimezone: 'Europe/Berlin'
 });
 
-attachFileOut();
-
 const port = process.env.PORT;
 const db_url = process.env.DBURL;
 const db_port = process.env.DBPORT;
@@ -28,8 +25,8 @@ export const diseases = db.get('diseases');
 export const signs = db.get('signs');
 
 db.then(() => {
-    log.info(`Active database connection on url: ${db_string}`)
-})
+    log.info(`Active database connection on url: ${db_string}`);
+});
 
 const app: express.Application = express();
 
@@ -52,24 +49,5 @@ app.use(cors());
 app.use('/api', router);
 
 app.listen(port, () => {
-    log.info(`Running backend on ${port}`)
-})
-
-function logToFile(logObject : ILogObject) {
-    appendFileSync('log.log', `${JSON.stringify(logObject)} \n`);
-}
-
-function attachFileOut() {
-    log.attachTransport(
-        {
-            silly: logToFile,
-            debug: logToFile,
-            trace: logToFile,
-            info: logToFile,
-            warn: logToFile,
-            error: logToFile,
-            fatal: logToFile,
-        },
-        'debug'
-    )
-}
+    log.info(`Running backend on ${port}`);
+});

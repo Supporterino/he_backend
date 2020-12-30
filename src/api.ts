@@ -13,14 +13,14 @@ router.post('/new_disease', async (req, res) => {
         res.status(409).json({
             msg: `Error: No name provided.`
         });
-    }   else if (!signs || signs.length === 0) {
+    } else if (!signs || signs.length === 0) {
         log.warn(`Received new disease without signs. Data: ${JSON.stringify(req.body)}`);
         res.status(409).json({
             msg: `Error: No sings provided.`
         });
     } else {
         const exisiting = await diseases.findOne({ name: name });
-        
+
         if (exisiting) {
             res.status(403).json({
                 msg: `Error: Disease already in database. Use Update if you wanna change the signs.`
@@ -49,7 +49,9 @@ router.get('/get_disease', (req, res) => {
     diseases.find({})
         .then((doc) => {
             if (doc) res.json(doc);
-            else res.json({ msg: `No disease present with this name.`});
+            else res.json({
+                msg: `No disease present with this name.`
+            });
         })
         .catch((err) => {
             log.warn(`Error getting a disease from database (${err})`);
@@ -80,13 +82,13 @@ router.post('/update', (req, res) => {
 });
 
 router.get('/signs', (req, res) => {
-    log.debug(`Returning all singns present in db.`);
+    log.debug(`Returning all signs present in db.`);
     signs.find()
         .then(all => {
             const clean: string[] = [];
             all.forEach(e => clean.push(e.name));
             res.json(clean);
-        })
+        });
 });
 
 router.post('/possible_disease', async (req, res) => {
@@ -97,9 +99,9 @@ router.post('/possible_disease', async (req, res) => {
             msg: `Error: No signs provided.`
         });
     } else {
-        log.debug(`Getting possible diseases for these signs: ${signs}`)
-        const possibles = await getPossibles(signs)
-    
+        log.debug(`Getting possible diseases for these signs: ${signs}`);
+        const possibles = await getPossibles(signs);
+
         res.json(possibles);
     }
 });
