@@ -2,7 +2,20 @@
 
 This is a basic node.js setup with TypeScript as the language. The boilerplate also includes eslint and a setup for nodemon to watch changes.
 
+## Env vars
+
+```shell
+export PORT=9119
+export DBURL=192.168.1.65
+export DBPORT=27017
+```
+
 ## Usage
+
+### Dockering
+```shell
+docker build -t "supporterino:wehele" .
+```
 
 ### Build
 ```bash
