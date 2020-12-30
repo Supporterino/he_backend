@@ -1,7 +1,6 @@
-import { Logger, ILogObject } from 'tslog';
+import { Logger } from 'tslog';
 import express from 'express';
 import * as dotenv from 'dotenv';
-import { appendFileSync } from 'fs';
 import monk from 'monk';
 import helmet from 'helmet';
 import cors from 'cors';
