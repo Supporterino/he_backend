@@ -1,6 +1,6 @@
-# TypeScript_Boilerplate
+# WeHeLe Backend
 
-This is a basic node.js setup with TypeScript as the language. The boilerplate also includes eslint and a setup for nodemon to watch changes.
+This is the backend repositiory of a small app for adding diseases to a database with their symptomes, cause, complications and treatments. The backend allows to list all diseases and a single diesease. It is possible to search diesases matching a special set of symptoms (main function). A disease can be updated by its name.
 
 ## Env vars
 
