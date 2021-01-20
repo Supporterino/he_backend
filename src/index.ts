@@ -1,12 +1,12 @@
 import { Logger } from 'tslog';
 import express from 'express';
-import * as dotenv from 'dotenv';
+//import * as dotenv from 'dotenv';
 import monk from 'monk';
 import helmet from 'helmet';
 import cors from 'cors';
 import { router } from './api';
 
-dotenv.config();
+//dotenv.config();
 
 export const log: Logger = new Logger({
     name: 'he_backend_logger',
@@ -17,9 +17,9 @@ export const log: Logger = new Logger({
 const port = process.env.PORT;
 const db_url = process.env.DBURL;
 const db_port = process.env.DBPORT;
-const db_string = `${db_url}:${db_port}/he`;
+const db_string = `root:123@${db_url}:${db_port}/he`;
 
-const db = monk(db_string);
+const db = monk(db_string, {authSource:'admin'});
 
 export const diseases = db.get('diseases');
 export const signs = db.get('signs');
